@@ -23,7 +23,7 @@ function App() {
   };
 
   async function apiCallForID(id) {
-    let url = `http://dummy.restapiexample.com/api/v1/employee/${id}`;
+    let url = `https://dummy.restapiexample.com/api/v1/employee/${id}`;
 
     try {
       const response = await fetch(url);
@@ -58,7 +58,7 @@ function App() {
   ];
 
   useEffect(() => {
-    const url = "http://dummy.restapiexample.com/api/v1/employees";
+    const url = "https://dummy.restapiexample.com/api/v1/employees";
 
     const fetchData = async () => {
       try {
