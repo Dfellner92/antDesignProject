@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "antd/dist/antd.css";
-import { Table, Tag, Space, Modal, Button } from "antd";
-
-const { Column, ColumnGroup } = Table;
+import { Table, Modal } from "antd";
 
 function App() {
   const [data, setData] = useState([]);
+  const [isoData, setIsoData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const showModal = () => {
+  const showModal = (id) => {
+    console.log(id);
+    localStorage.setItem("open modal id", id);
+    apiCallForID(id);
     setIsModalVisible(true);
   };
 
@@ -20,7 +22,17 @@ function App() {
     setIsModalVisible(false);
   };
 
-  
+  async function apiCallForID(id) {
+    let url = `http://dummy.restapiexample.com/api/v1/employee/${id}`;
+
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+      setIsoData(json.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 
   const columns = [
     {
@@ -35,10 +47,10 @@ function App() {
     },
     {
       title: "Button Test",
-      key: "key",
-      dataIndex: "key",
-      render: (text, record) => (
-        <button type="primary" onClick={showModal}>
+      key: "id",
+      dataIndex: "id",
+      render: (id) => (
+        <button id={id} type="primary" onClick={() => showModal(id)}>
           Open Modal
         </button>
       ),
@@ -53,7 +65,6 @@ function App() {
         const response = await fetch(url);
         const json = await response.json();
         setData(json.data);
-        console.log(json);
       } catch (error) {
         console.log("error", error);
       }
@@ -62,9 +73,7 @@ function App() {
     fetchData();
   }, []);
 
-  console.log(Array.isArray(data));
-  let mapped = data.map((elem) => elem.id);
-  console.log(mapped);
+  console.log(isoData.employee_name);
 
   return (
     <div className="App">
@@ -72,13 +81,12 @@ function App() {
       <Modal
         title="Basic Modal"
         visible={isModalVisible}
+        content={isoData}
         onOk={handleOk}
         onCancel={handleCancel}
-        dataSource={data}
       >
-        <p></p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>{isoData.employee_name}</p>
+        <p>{isoData.employee_age}</p>
       </Modal>
       ,{" "}
     </div>
