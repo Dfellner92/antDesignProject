@@ -73,20 +73,20 @@ function App() {
     fetchData();
   }, []);
 
-  console.log(isoData.employee_name);
+  console.log(isoData);
 
   return (
     <div className="App">
       <Table columns={columns} dataSource={data}></Table>
       <Modal
-        title="Basic Modal"
+        title={isoData.employee_name}
         visible={isModalVisible}
         content={isoData}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>{isoData.employee_name}</p>
-        <p>{isoData.employee_age}</p>
+        <p>{"Employee Age: " + isoData.employee_age}</p>
+        <p>{"Employee Salary: $" + isoData.employee_salary}</p>
       </Modal>
       ,{" "}
     </div>
