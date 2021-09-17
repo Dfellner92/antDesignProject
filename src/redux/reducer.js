@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-const employeesReducer = (state = [], action) => {
+const employeesReducer = (state = { employees: [] }, action) => {
     switch (action.type) {
     case "ADD_EMPLOYEEDATA_REQUEST":
       return {
@@ -10,7 +10,7 @@ const employeesReducer = (state = [], action) => {
     case "ADD_EMPLOYEEDATA_SUCCESS":
       return {
         loading: false,
-        employee: action.payload,
+        employees: action.payload,
       };
     case "ADD_EMPLOYEEDATA_FAILED":
       return {

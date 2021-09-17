@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import "antd/dist/antd.css";
 import { Table, Modal } from "antd";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addEmployeeData } from "./redux/actions";
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
       const response = await fetch(url);
       const json = await response.json();
       setIsoData(json.data);
-      callDispatch(id);
+      await callDispatch(id);
     } catch (error) {
       console.log("error", error);
     }
